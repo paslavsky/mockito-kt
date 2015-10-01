@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2015 Andrey Paslavsky.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package net.paslavsky.kotlin.mockito
 
 import org.mockito.Matchers
@@ -5,7 +22,24 @@ import kotlin.reflect.KClass
 import org.hamcrest.Matcher
 
 /**
- * ***TODO: Describe this file***
+ * # Matching API
+ *
+ * Some methods of this class is simple `delegates` to the [Matchers] methods. Another part of the methods
+ * trying to pick up `not null` default return values to avoid exceptions. For this used [Defaults] property.
+ *
+ * if your tests failed with message:
+ * ```
+ * Caused by: java.lang.IllegalStateException: Please register default value for your_class_name
+ * ```
+ *
+ * then please register your default value like in example below:
+ *
+ * ```
+ * mock(Foo.class) {
+ *     defaults.register(Bar::class to barValue)
+ *     ...
+ * }
+ * ```
  *
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
@@ -79,6 +113,7 @@ public abstract class MatchersKt {
     public fun matches(regex: String): String = Matchers.matches(regex)
     public fun endsWith(suffix: String): String = Matchers.endsWith(suffix)
     public fun startsWith(prefix: String): String = Matchers.startsWith(prefix)
+
     public fun <T : Any> argThat(matcher: Matcher<T>, kClass: KClass<T>): T {
         Matchers.argThat(matcher)
         return defaults.valueFor(kClass)

@@ -21,7 +21,24 @@
         </developer>
     </developers>
 
-    <scm></scm>
+    <scm>
+        <url>https://github.com/paslavsky/mockito-kt</url>
+        <connection>https://github.com/paslavsky/mockito-kt.git</connection>
+    </scm>
+
+    <inceptionYear>2015</inceptionYear>
+
+    <issueManagement>
+        <url>https://github.com/paslavsky/mockito-kt/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <properties>
         <kotlin.version>0.13.1514</kotlin.version>
