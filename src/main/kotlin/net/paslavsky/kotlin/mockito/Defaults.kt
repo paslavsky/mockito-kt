@@ -46,7 +46,8 @@ public open class Defaults {
     }.filterNotNull().filter {
         kClass.java.isInstance(it)
     }.map {
-        it as T
+        @Suppress("UNCHECKED_CAST")
+        (it as T)
     }.firstOrNull()
 
     public companion object Global : Defaults() {
@@ -97,6 +98,7 @@ public open class Defaults {
                 }
             }
             register {
+                @Suppress("SENSELESS_COMPARISON")
                 when {
                     it == KClass::class -> KClass::class
                     it == Class::class -> Class::class.java

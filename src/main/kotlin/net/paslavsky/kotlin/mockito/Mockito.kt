@@ -51,19 +51,25 @@ import kotlin.reflect.KClass
  */
 public fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val mock = Mockito.mock(kClass.java)
-    Mock<T>(mock).setup()
+    val mockKt = Mock<T>(mock)
+    mockKt.setup()
+    mockKt.actionChains.asSequence().forEach { it.done() }
     return mock
 }
 
 public fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(obj)
-    Mock<T>(spy).setup()
+    val mockKt = Mock<T>(spy)
+    mockKt.setup()
+    mockKt.actionChains.asSequence().forEach { it.done() }
     return spy
 }
 
 public fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(classToSpy.java)
-    Mock<T>(spy).setup()
+    val mockKt = Mock<T>(spy)
+    mockKt.setup()
+    mockKt.actionChains.asSequence().forEach { it.done() }
     return spy
 }
 

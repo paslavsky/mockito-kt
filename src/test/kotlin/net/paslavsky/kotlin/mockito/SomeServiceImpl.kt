@@ -27,4 +27,6 @@ public open class SomeServiceImpl(public val boolValue: Boolean) : SomeService {
     override fun foo(): String = "Test value"
 
     override fun bar(dataValue: SomeData): Pair<Int, Int> = dataValue.intValue to dataValue.intValue
+
+    override fun withNulls(dataValue: SomeData?): String? = dataValue?.toString()
 }

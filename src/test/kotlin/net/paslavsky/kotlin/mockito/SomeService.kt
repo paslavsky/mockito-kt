@@ -26,4 +26,5 @@ package net.paslavsky.kotlin.mockito
 public interface SomeService {
     fun foo(): String
     fun bar(dataValue: SomeData): Pair<Int, Int>
+    fun withNulls(dataValue: SomeData?): String?
 }

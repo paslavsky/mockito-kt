@@ -21,8 +21,13 @@ verify(list) {
 ## Example 2
 ```
 val list = mock(MutableList::class) {
-    `when`(mock.size()).thenReturn(5)
-    `when`(mock.get(eq(3))).thenReturn("String 4")
+    whenMock {
+        size()
+    }.thenReturn(5)
+
+    whenMock {
+        get(eq(3))
+    }.thenReturn("String 4")
 }
 assertEquals(5, list.size())
 assertEquals("String 4", list.get(3))

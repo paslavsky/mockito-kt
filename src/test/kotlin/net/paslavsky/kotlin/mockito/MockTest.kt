@@ -27,14 +27,14 @@ import kotlin.test.assertFails
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public class MockitoKtTest : Spek() {
+public class MockTest : Spek() {
     init {
         given("some service class") {
             val serviceClass = SomeService::class
             on("creating mock that based on this class") {
                 val mockService = mock(serviceClass) {
-                    `when`(mock.foo()).thenReturn("bla bla bla")
-                    `when`(mock.bar(eq(SomeData("abc", 123)))).thenReturn(123 to 321)
+                    whenMock { foo() }.thenReturn("bla bla bla")
+                    whenMock { bar(eq(SomeData("abc", 123))) }.thenReturn(123 to 321)
                 }
                 it("should work as expected") {
                     assertEquals("bla bla bla", mockService.foo())
@@ -46,7 +46,7 @@ public class MockitoKtTest : Spek() {
                 it("should fails") {
                     assertFails {
                         mock(serviceClass) {
-                            `when`(mock.bar(any(SomeData::class))).thenReturn(123 to 321)
+                            whenMock { bar(any(SomeData::class)) }.thenReturn(123 to 321)
                         }
                     }
                 }
@@ -55,10 +55,39 @@ public class MockitoKtTest : Spek() {
             on("creating mock with any matching and default value") {
                 val mockService = mock(serviceClass) {
                     defaults.register(SomeData::class to SomeData("123", 321))
-                    `when`(mock.bar(any(SomeData::class))).thenReturn(123 to 321)
+                    whenMock { bar(any(SomeData::class)) }.thenReturn(123 to 321)
                 }
                 it("should work as expected") {
                     assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
+                }
+            }
+
+            on("creating mock with multiple actions") {
+                val mockService = mock(serviceClass) {
+                    whenMock { foo() }.thenReturn("one").thenReturn("two").thenThrow(IllegalStateException::class)
+                }
+                it("should return `one`") {
+                    assertEquals("one", mockService.foo())
+                }
+                it("should return `two`") {
+                    assertEquals("two", mockService.foo())
+                }
+                it("should throw exception") {
+                    assertFails {
+                        mockService.foo()
+                    }
+                }
+            }
+
+            on("mocking method that can accept nulls") {
+                val mockService = mock(serviceClass) {
+                    whenMock {
+                        withNulls(anyNullable())
+                    }.thenReturn(null)
+                }
+
+                it("should work with null value as an argument") {
+                    assertEquals(null, mockService.withNulls(null))
                 }
             }
         }

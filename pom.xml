@@ -41,7 +41,7 @@
     </licenses>
 
     <properties>
-        <kotlin.version>1.0.0-beta-1038</kotlin.version>
+        <kotlin.version>1.0.0-beta-1103</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <mockito.version>1.10.19</mockito.version>
