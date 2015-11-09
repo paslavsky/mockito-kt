@@ -6,7 +6,7 @@
 
     <groupId>net.paslavsky.kotlin</groupId>
     <artifactId>mockito-kt</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-beta</version>
     <packaging>jar</packaging>
     <name>Mockito for Kotlin</name>
 
