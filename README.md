@@ -56,3 +56,31 @@ mock(Foo::class) {
 ```
 Defaults.Global.register(Bar::class to someBarValue)
 ```
+
+## Using Maven
+### System requirements
+|        |            |
+| ------ | :--------: |
+| Java   | 1.7+       |
+| Maven  | v3+        |
+| Kotlin | 1.0 Beta 3 |
+
+### Repository settings
+```
+    <repositories>
+        <repository>
+            <id>paslavsky.repo</id>
+            <url>http://paslavsky.homeunix.net:8000/nexus/content/repositories/releases</url>
+        </repository>
+    </repositories>
+```
+
+### Artifact
+```
+    <dependency>
+        <groupId>net.paslavsky.kotlin</groupId>
+        <artifactId>mockito-kt</artifactId>
+        <version>0.0.3-beta</version>
+        <scope>test</scope>
+    </dependency>
+```

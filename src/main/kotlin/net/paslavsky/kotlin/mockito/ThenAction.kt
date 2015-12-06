@@ -31,7 +31,7 @@ import kotlin.reflect.KClass
 public class ThenAction<T, M : Any>(
         private val mock: M,
         private val call: M.() -> T,
-        private val chains: MutableSet<ThenAction.ActionChain<*>>
+        private val chains: MutableSet<ThenAction<*,*>.ActionChain<*>>
 ) {
     private val dummy: Dummy = Mockito.mock(Dummy::class.java)
 
