@@ -77,5 +77,9 @@ public fun <T : Any> verify(mock: T, verify: Verification<T>.() -> Unit) {
     Verification(mock).verify()
 }
 
+public fun <T : Any> verifyOnce(mock: T, verify: T.() -> Unit) {
+    Mockito.verify(mock, Mockito.times(1)).verify()
+}
+
 public fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
 public fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
