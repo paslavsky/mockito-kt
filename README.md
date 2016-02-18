@@ -63,7 +63,7 @@ Defaults.Global.register(Bar::class to someBarValue)
 | ------ | :--------: |
 | Java   | 1.7+       |
 | Maven  | v3+        |
-| Kotlin | 1.0 Beta 3 |
+| Kotlin | 1.0        |
 
 ### Repository settings
 ```
@@ -80,7 +80,7 @@ Defaults.Global.register(Bar::class to someBarValue)
     <dependency>
         <groupId>net.paslavsky.kotlin</groupId>
         <artifactId>mockito-kt</artifactId>
-        <version>0.0.3-beta</version>
+        <version>0.0.4-beta</version>
         <scope>test</scope>
     </dependency>
 ```

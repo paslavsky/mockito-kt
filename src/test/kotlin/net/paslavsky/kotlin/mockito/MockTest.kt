@@ -27,7 +27,7 @@ import kotlin.test.assertFails
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public class MockTest : Spek() {
+class MockTest : Spek() {
     init {
         given("some service class") {
             val serviceClass = SomeService::class
