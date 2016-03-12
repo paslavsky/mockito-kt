@@ -6,7 +6,7 @@
 
     <groupId>net.paslavsky.kotlin</groupId>
     <artifactId>mockito-kt</artifactId>
-    <version>0.0.4-beta</version>
+    <version>0.0.5-beta</version>
     <packaging>jar</packaging>
     <name>Mockito for Kotlin</name>
 
@@ -26,7 +26,7 @@
         <connection>https://github.com/paslavsky/mockito-kt.git</connection>
     </scm>
 
-    <inceptionYear>2015</inceptionYear>
+    <inceptionYear>2016</inceptionYear>
 
     <issueManagement>
         <url>https://github.com/paslavsky/mockito-kt/issues</url>
