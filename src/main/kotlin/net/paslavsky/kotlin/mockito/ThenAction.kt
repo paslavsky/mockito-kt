@@ -28,7 +28,8 @@ import kotlin.reflect.KClass
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public class ThenAction<T, M : Any>(
+@Suppress("unused")
+class ThenAction<T, M : Any>(
         private val mock: M,
         private val call: M.() -> T,
         private val chains: MutableSet<ThenAction<*,*>.ActionChain<*>>
@@ -36,29 +37,29 @@ public class ThenAction<T, M : Any>(
     private val dummy: Dummy = Mockito.mock(Dummy::class.java)
 
     private open class Dummy {
-        public open fun doSomething(): Any? = null
+        open fun doSomething(): Any? = null
     }
 
-    public fun thenThrow(toBeThrown: KClass<out Throwable>) = ActionChain<T>({ Mockito.doThrow(toBeThrown.java) })
-    public fun thenThrow(toBeThrown: Throwable) = ActionChain<T>({ Mockito.doThrow(toBeThrown) })
-    public fun thenCallRealMethod() = ActionChain<T>({ Mockito.doCallRealMethod() })
-    public fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = ActionChain<T>({ Mockito.doAnswer(answer) })
-    public fun thenNothing() = ActionChain<T>({ Mockito.doNothing() })
-    public fun thenReturn(toBeReturned: T?) = ActionChain<T>({ Mockito.doReturn(toBeReturned) })
+    fun thenThrow(toBeThrown: KClass<out Throwable>) = ActionChain<T>({ Mockito.doThrow(toBeThrown.java) })
+    fun thenThrow(toBeThrown: Throwable) = ActionChain<T>({ Mockito.doThrow(toBeThrown) })
+    fun thenCallRealMethod() = ActionChain<T>({ Mockito.doCallRealMethod() })
+    fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = ActionChain<T>({ Mockito.doAnswer(answer) })
+    fun thenNothing() = ActionChain<T>({ Mockito.doNothing() })
+    fun thenReturn(toBeReturned: T?) = ActionChain<T>({ Mockito.doReturn(toBeReturned) })
 
     private class PreviousActionHolder(internal val acton: () -> Stubber)
 
-    public inner class ActionChain<T>(private var acton: () -> Stubber) {
+    inner class ActionChain<T>(private var acton: () -> Stubber) {
         init {
             chains.add(this)
         }
 
-        public fun thenThrow(toBeThrown: KClass<out Throwable>) = addAction { doThrow(toBeThrown.java) }
-        public fun thenThrow(toBeThrown: Throwable) = addAction { doThrow(toBeThrown) }
-        public fun thenCallRealMethod() = addAction { doCallRealMethod() }
-        public fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = addAction { doAnswer(answer) }
-        public fun thenNothing() = addAction { doNothing() }
-        public fun thenReturn(toBeReturned: T?) = addAction { doReturn(toBeReturned) }
+        fun thenThrow(toBeThrown: KClass<out Throwable>) = addAction { doThrow(toBeThrown.java) }
+        fun thenThrow(toBeThrown: Throwable) = addAction { doThrow(toBeThrown) }
+        fun thenCallRealMethod() = addAction { doCallRealMethod() }
+        fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = addAction { doAnswer(answer) }
+        fun thenNothing() = addAction { doNothing() }
+        fun thenReturn(toBeReturned: T?) = addAction { doReturn(toBeReturned) }
 
         private fun addAction(newAction: Stubber.() -> Stubber): ActionChain<T> {
             val previousActionHolder = PreviousActionHolder(acton)

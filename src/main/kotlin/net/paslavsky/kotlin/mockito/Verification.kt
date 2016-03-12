@@ -25,15 +25,18 @@ import org.mockito.Mockito
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public class Verification<M : Any>(private val mock: M) : MatchersKt() {
-    public fun onece(): M = Mockito.verify(mock, Mockito.times(1))
-    public fun never(): M = Mockito.verify(mock, Mockito.never())
-    public fun times(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.times(wantedNumberOfInvocations))
-    public fun atLeastOnce(): M = Mockito.verify(mock, Mockito.atLeastOnce())
-    public fun atLeast(minNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.atLeast(minNumberOfInvocations))
-    public fun atMost(maxNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.atMost(maxNumberOfInvocations))
-    public fun calls(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.calls(wantedNumberOfInvocations))
-    public fun only(): M = Mockito.verify(mock, Mockito.only())
-    public fun timeout(millis: Long): M = Mockito.verify(mock, Mockito.timeout(millis))
-    public fun after(millis: Int): M = Mockito.verify(mock, Mockito.after(millis))
+@Suppress("unused")
+class Verification<M : Any>(private val mock: M) : MatchersKt() {
+    @Deprecated("Type, please use #once", ReplaceWith("once"))
+    fun onece(): M = Mockito.verify(mock, Mockito.times(1))
+    fun once(): M = Mockito.verify(mock, Mockito.times(1))
+    fun never(): M = Mockito.verify(mock, Mockito.never())
+    fun times(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.times(wantedNumberOfInvocations))
+    fun atLeastOnce(): M = Mockito.verify(mock, Mockito.atLeastOnce())
+    fun atLeast(minNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.atLeast(minNumberOfInvocations))
+    fun atMost(maxNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.atMost(maxNumberOfInvocations))
+    fun calls(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.calls(wantedNumberOfInvocations))
+    fun only(): M = Mockito.verify(mock, Mockito.only())
+    fun timeout(millis: Long): M = Mockito.verify(mock, Mockito.timeout(millis))
+    fun after(millis: Int): M = Mockito.verify(mock, Mockito.after(millis))
 }

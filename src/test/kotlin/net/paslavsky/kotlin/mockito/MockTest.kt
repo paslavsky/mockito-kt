@@ -90,6 +90,18 @@ class MockTest : Spek() {
                     assertEquals(null, mockService.withNulls(null))
                 }
             }
+
+            on("call few methods") {
+                val mockService = mock(serviceClass)
+                mockService.foo()
+                mockService.bar(SomeData("Test", 1))
+                it("should able check this invocation") {
+                    once(mockService) { match ->
+                        foo()
+                        bar(match.eq(SomeData("Test", 1)))
+                    }
+                }
+            }
         }
     }
 }

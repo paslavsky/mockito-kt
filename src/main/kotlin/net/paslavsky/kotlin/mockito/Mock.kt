@@ -25,8 +25,8 @@ import java.util.*
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public class Mock<M : Any>(private val mock: M) : MatchersKt() {
+class Mock<M : Any>(private val mock: M) : MatchersKt() {
     internal val actionChains: MutableSet<ThenAction<*,*>.ActionChain<*>> = HashSet()
 
-    public fun <T> whenMock(body: M.() -> T): ThenAction<T, M> = ThenAction(mock, body, actionChains)
+    fun <T> whenMock(body: M.() -> T): ThenAction<T, M> = ThenAction(mock, body, actionChains)
 }
