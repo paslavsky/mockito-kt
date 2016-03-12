@@ -40,6 +40,21 @@ val set = spy(HashSet::class) {
     ...
 }
 ```
+## Example 4
+```
+// Mocking
+val mockService = mock(ServiceClass::class)
+// Test
+mockService.foo()
+mockService.bar(SomeData("Test", 1))
+// Verification
+once(mockService) {
+    match ->
+    foo()
+    bar(match.eq(SomeData("Test", 1)))
+}
+
+```
 
 ## Matching and null values
 Standard Mockito API does not always work fine due to the strict control `null` references in Kotlin. `Mockito Kt` tries to find default `not null` value, but in case when it impossible developer can register his own defaults manually. There is two options: local - for one mock object or globally - for all cases.
@@ -80,7 +95,7 @@ Defaults.Global.register(Bar::class to someBarValue)
     <dependency>
         <groupId>net.paslavsky.kotlin</groupId>
         <artifactId>mockito-kt</artifactId>
-        <version>0.0.4-beta</version>
+        <version>0.0.5-beta</version>
         <scope>test</scope>
     </dependency>
 ```
