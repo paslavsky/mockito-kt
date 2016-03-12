@@ -15,6 +15,8 @@
  *
  */
 
+@file:Suppress("unused")
+
 package net.paslavsky.kotlin.mockito
 
 import org.mockito.Mockito
@@ -49,7 +51,7 @@ import kotlin.reflect.KClass
  * ...
  * ```
  */
-public fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
+fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val mock = Mockito.mock(kClass.java)
     val mockKt = Mock<T>(mock)
     mockKt.setup()
@@ -57,7 +59,7 @@ public fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T 
     return mock
 }
 
-public fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
+fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(obj)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
@@ -65,7 +67,7 @@ public fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
     return spy
 }
 
-public fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
+fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(classToSpy.java)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
@@ -73,9 +75,13 @@ public fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}):
     return spy
 }
 
-public fun <T : Any> verify(mock: T, verify: Verification<T>.() -> Unit) {
+fun <T : Any> verify(mock: T, verify: Verification<T>.() -> Unit) {
     Verification(mock).verify()
 }
 
-public fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
-public fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
+fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
+fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
+
+fun <T: Any> once(mock: T, checks: T.(match: MatchersKt) -> Unit) {
+    Mockito.verify(mock).checks(object: MatchersKt() {})
+}

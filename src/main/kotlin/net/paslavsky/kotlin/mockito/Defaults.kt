@@ -28,16 +28,16 @@ import kotlin.reflect.jvm.isAccessible
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public open class Defaults {
+open class Defaults {
     private val search = LinkedList< (kotlin.Function1<KClass<*>, Any?>)>()
 
-    public open fun <T : Any> valueFor(kClass: KClass<T>) : T = internalLookUp(kClass) ?: Global.valueFor(kClass)
+    open fun <T : Any> valueFor(kClass: KClass<T>) : T = internalLookUp(kClass) ?: Global.valueFor(kClass)
 
-    public fun register(lookUpValueFor: (KClass<*>) -> Any?) {
+    fun register(lookUpValueFor: (KClass<*>) -> Any?) {
         search.add(lookUpValueFor)
     }
 
-    public fun register(pair: Pair<KClass<*>, Any>) {
+    fun register(pair: Pair<KClass<*>, Any>) {
         search.add { if (pair.first == it) pair.second else null }
     }
 
@@ -50,7 +50,7 @@ public open class Defaults {
         (it as T)
     }.firstOrNull()
 
-    public companion object Global : Defaults() {
+    companion object Global : Defaults() {
         init {
             register {
                 when (it) {

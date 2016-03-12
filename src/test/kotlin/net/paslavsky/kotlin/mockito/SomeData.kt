@@ -23,4 +23,4 @@ package net.paslavsky.kotlin.mockito
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-public data class SomeData(public val stringValue: String, public val intValue: Int)
+data class SomeData(val stringValue: String, val intValue: Int)
