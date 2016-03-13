@@ -48,8 +48,7 @@ val mockService = mock(ServiceClass::class)
 mockService.foo()
 mockService.bar(SomeData("Test", 1))
 // Verification
-verifyOnce(mockService) {
-    match ->
+verifyOnce(mockService) { match ->
     foo()
     bar(match.eq(SomeData("Test", 1)))
 }
