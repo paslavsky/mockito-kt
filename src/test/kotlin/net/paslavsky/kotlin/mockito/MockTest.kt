@@ -96,7 +96,7 @@ class MockTest : Spek() {
                 mockService.foo()
                 mockService.bar(SomeData("Test", 1))
                 it("should able check this invocation") {
-                    once(mockService) { match ->
+                    verifyOnce(mockService) { match ->
                         foo()
                         bar(match.eq(SomeData("Test", 1)))
                     }

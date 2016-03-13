@@ -82,6 +82,6 @@ fun <T : Any> verify(mock: T, verify: Verification<T>.() -> Unit) {
 fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
 fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
 
-fun <T: Any> once(mock: T, checks: T.(match: MatchersKt) -> Unit) {
+fun <T: Any> verifyOnce(mock: T, checks: T.(match: MatchersKt) -> Unit) {
     Mockito.verify(mock).checks(object: MatchersKt() {})
 }
