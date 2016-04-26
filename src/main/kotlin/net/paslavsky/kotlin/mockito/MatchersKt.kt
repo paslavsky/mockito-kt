@@ -45,7 +45,7 @@ import org.hamcrest.Matcher
  * @since 0.0.1
  */
 @Suppress("UNCHECKED_CAST", "unused")
-abstract class MatchersKt {
+object MatchersKt {
     val defaults = Defaults()
 
     fun <T : Any> any(kClass: KClass<T>): T {
