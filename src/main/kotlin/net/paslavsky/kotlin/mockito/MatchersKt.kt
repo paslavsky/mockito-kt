@@ -17,14 +17,14 @@
 
 package net.paslavsky.kotlin.mockito
 
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import kotlin.reflect.KClass
-import org.hamcrest.Matcher
+import org.mockito.ArgumentMatcher
 
 /**
  * # Matching API
  *
- * Some methods of this class is simple `delegates` to the [Matchers] methods. Another part of the methods
+ * Some methods of this class is simple `delegates` to the [ArgumentMatchers] methods. Another part of the methods
  * trying to pick up `not null` default return values to avoid exceptions. For this used [Defaults] property.
  *
  * if your tests failed with message:
@@ -49,18 +49,18 @@ abstract class MatchersKt {
     val defaults = Defaults()
 
     fun <T : Any> any(kClass: KClass<T>): T {
-        Matchers.any(kClass.java)
+        ArgumentMatchers.any(kClass.java)
         return defaults.valueFor(kClass)
     }
 
     fun <T> anyVararg(): Array<T> {
-        Matchers.anyVararg<T>()
+        ArgumentMatchers.any<Array<T>>()
         @Suppress("CAST_NEVER_SUCCEEDS")
         return defaults.valueFor(Array<Any>::class) as Array<T>
     }
 
     fun any(): Any = any(Any::class)
-    fun <T : Any> anyNullable(): T? = Matchers.any<T>()
+    fun <T : Any> anyNullable(): T? = ArgumentMatchers.any<T>()
     fun anyBoolean(): Boolean = any(Boolean::class)
     fun anyByte(): Byte = any(Byte::class)
     fun anyChar(): Char = any(Char::class)
@@ -80,39 +80,39 @@ abstract class MatchersKt {
     fun <K : Any, V : Any> anyMutableMap(): MutableMap<K, V> = any(MutableMap::class) as MutableMap<K, V>
 
     fun <T : Any> isA(kClass: KClass<T>): T {
-        Matchers.isA(kClass.java)
+        ArgumentMatchers.isA(kClass.java)
         return defaults.valueFor(kClass)
     }
 
     fun <T> eq(t: T): T {
-        Matchers.eq(t)
+        ArgumentMatchers.eq(t)
         return t
     }
 
     fun <T> refEq(t: T): T {
-        Matchers.refEq(t)
+        ArgumentMatchers.refEq(t)
         return t
     }
 
     fun <T> same(t: T): T {
-        Matchers.same(t)
+        ArgumentMatchers.same(t)
         return t
     }
 
     fun <T : Any> isNull(): T? {
-        Matchers.isNull()
+        ArgumentMatchers.isNull<T>()
         return null
     }
 
-    fun <T : Any> isNotNull(kClass: KClass<T>): T? = Matchers.isNotNull(kClass.java)
+    fun <T : Any> isNotNull(): T? = ArgumentMatchers.isNotNull()
     
-    fun contains(substring:String) :String = Matchers.contains(substring)
-    fun matches(regex: String): String = Matchers.matches(regex)
-    fun endsWith(suffix: String): String = Matchers.endsWith(suffix)
-    fun startsWith(prefix: String): String = Matchers.startsWith(prefix)
+    fun contains(substring:String) :String = ArgumentMatchers.contains(substring)
+    fun matches(regex: String): String = ArgumentMatchers.matches(regex)
+    fun endsWith(suffix: String): String = ArgumentMatchers.endsWith(suffix)
+    fun startsWith(prefix: String): String = ArgumentMatchers.startsWith(prefix)
 
-    fun <T : Any> argThat(matcher: Matcher<T>, kClass: KClass<T>): T {
-        Matchers.argThat(matcher)
+    fun <T : Any> argThat(matcher: ArgumentMatcher<T>, kClass: KClass<T>): T {
+        ArgumentMatchers.argThat(matcher)
         return defaults.valueFor(kClass)
     }
 }

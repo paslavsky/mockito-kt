@@ -6,7 +6,7 @@
 
     <groupId>net.paslavsky.kotlin</groupId>
     <artifactId>mockito-kt</artifactId>
-    <version>0.0.5-beta</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Mockito for Kotlin</name>
 
@@ -26,7 +26,7 @@
         <connection>https://github.com/paslavsky/mockito-kt.git</connection>
     </scm>
 
-    <inceptionYear>2016</inceptionYear>
+    <inceptionYear>2017</inceptionYear>
 
     <issueManagement>
         <url>https://github.com/paslavsky/mockito-kt/issues</url>
@@ -48,10 +48,10 @@
     </distributionManagement>
 
     <properties>
-        <kotlin.version>1.0.0</kotlin.version>
+        <kotlin.version>1.1.51</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
-        <mockito.version>1.10.19</mockito.version>
+        <mockito.version>2.11.0</mockito.version>
         <spek.version>0.1.195</spek.version>
     </properties>
 
@@ -71,14 +71,35 @@
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jetbrains.spek</groupId>
-            <artifactId>spek</artifactId>
-            <version>${spek.version}</version>
+            <artifactId>spek-api</artifactId>
+            <version>1.1.5</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.spek</groupId>
+            <artifactId>spek-junit-platform-engine</artifactId>
+            <version>1.1.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -91,7 +112,7 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
-            <version>1.1</version>
+            <version>1.3</version>
         </dependency>
     </dependencies>
 

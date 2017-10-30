@@ -18,6 +18,11 @@
 package net.paslavsky.kotlin.mockito
 
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.on
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
@@ -27,81 +32,80 @@ import kotlin.test.assertFails
  * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
  * @since 0.0.1
  */
-class MockTest : Spek() {
-    init {
-        given("some service class") {
-            val serviceClass = SomeService::class
-            on("creating mock that based on this class") {
-                val mockService = mock(serviceClass) {
-                    whenMock { foo() }.thenReturn("bla bla bla")
-                    whenMock { bar(eq(SomeData("abc", 123))) }.thenReturn(123 to 321)
-                }
-                it("should work as expected") {
-                    assertEquals("bla bla bla", mockService.foo())
-                    assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
-                }
+@RunWith(JUnitPlatform::class)
+class MockTest : Spek({
+    given("some service class") {
+        val serviceClass = SomeService::class
+        on("creating mock that based on this class") {
+            val mockService = mock(serviceClass) {
+                on { foo() }.thenReturn("bla bla bla")
+                on { bar(eq(SomeData("abc", 123))) }.thenReturn(123 to 321)
             }
-
-            on("creating mock with any matching of the unregistered type") {
-                it("should fails") {
-                    assertFails {
-                        mock(serviceClass) {
-                            whenMock { bar(any(SomeData::class)) }.thenReturn(123 to 321)
-                        }
-                    }
-                }
+            it("should work as expected") {
+                assertEquals("bla bla bla", mockService.foo())
+                assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
             }
+        }
 
-            on("creating mock with any matching and default value") {
-                val mockService = mock(serviceClass) {
-                    defaults.register(SomeData::class to SomeData("123", 321))
-                    whenMock { bar(any(SomeData::class)) }.thenReturn(123 to 321)
-                }
-                it("should work as expected") {
-                    assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
-                }
-            }
-
-            on("creating mock with multiple actions") {
-                val mockService = mock(serviceClass) {
-                    whenMock { foo() }.thenReturn("one").thenReturn("two").thenThrow(IllegalStateException::class)
-                }
-                it("should return `one`") {
-                    assertEquals("one", mockService.foo())
-                }
-                it("should return `two`") {
-                    assertEquals("two", mockService.foo())
-                }
-                it("should throw exception") {
-                    assertFails {
-                        mockService.foo()
-                    }
-                }
-            }
-
-            on("mocking method that can accept nulls") {
-                val mockService = mock(serviceClass) {
-                    whenMock {
-                        withNulls(anyNullable())
-                    }.thenReturn(null)
-                }
-
-                it("should work with null value as an argument") {
-                    assertEquals(null, mockService.withNulls(null))
-                }
-            }
-
-            on("call few methods") {
-                val mockService = mock(serviceClass)
-                mockService.foo()
-                mockService.bar(SomeData("Test", 1))
-                it("should able check this invocation") {
-                    verifyOnce(mockService) { match ->
-                        foo()
-                        bar(match.eq(SomeData("Test", 1)))
+        on("creating mock with any matching of the unregistered type") {
+            it("should fails") {
+                assertFails {
+                    mock(serviceClass) {
+                        on { bar(any(SomeData::class)) }.thenReturn(123 to 321)
                     }
                 }
             }
         }
+
+        on("creating mock with any matching and default value") {
+            val mockService = mock(serviceClass) {
+                defaults.register(SomeData::class to SomeData("123", 321))
+                on { bar(any(SomeData::class)) }.thenReturn(123 to 321)
+            }
+            it("should work as expected") {
+                assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
+            }
+        }
+
+        on("creating mock with multiple actions") {
+            val mockService = mock(serviceClass) {
+                on { foo() }.thenReturn("one").thenReturn("two").thenThrow(IllegalStateException::class)
+            }
+            it("should return `one`") {
+                assertEquals("one", mockService.foo())
+            }
+            it("should return `two`") {
+                assertEquals("two", mockService.foo())
+            }
+            it("should throw exception") {
+                assertFails {
+                    mockService.foo()
+                }
+            }
+        }
+
+        on("mocking method that can accept nulls") {
+            val mockService = mock(serviceClass) {
+                on {
+                    withNulls(anyNullable())
+                }.thenReturn(null)
+            }
+
+            it("should work with null value as an argument") {
+                assertEquals(null, mockService.withNulls(null))
+            }
+        }
+
+        on("call few methods") {
+            val mockService = mock(serviceClass)
+            mockService.foo()
+            mockService.bar(SomeData("Test", 1))
+            it("should able check this invocation") {
+                verifyOnce(mockService) { match ->
+                    foo()
+                    bar(match.eq(SomeData("Test", 1)))
+                }
+            }
+        }
     }
-}
+})

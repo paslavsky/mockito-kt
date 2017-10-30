@@ -26,9 +26,7 @@ import org.mockito.Mockito
  * @since 0.0.1
  */
 @Suppress("unused")
-class Verification<M : Any>(private val mock: M) : MatchersKt() {
-    @Deprecated("Type, please use #once", ReplaceWith("once"))
-    fun onece(): M = Mockito.verify(mock, Mockito.times(1))
+class Verification<out M : Any>(private val mock: M) : MatchersKt() {
     fun once(): M = Mockito.verify(mock, Mockito.times(1))
     fun never(): M = Mockito.verify(mock, Mockito.never())
     fun times(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.times(wantedNumberOfInvocations))
@@ -38,5 +36,5 @@ class Verification<M : Any>(private val mock: M) : MatchersKt() {
     fun calls(wantedNumberOfInvocations: Int): M = Mockito.verify(mock, Mockito.calls(wantedNumberOfInvocations))
     fun only(): M = Mockito.verify(mock, Mockito.only())
     fun timeout(millis: Long): M = Mockito.verify(mock, Mockito.timeout(millis))
-    fun after(millis: Int): M = Mockito.verify(mock, Mockito.after(millis))
+    fun after(millis: Long): M = Mockito.verify(mock, Mockito.after(millis))
 }
