@@ -17,7 +17,9 @@
 
 package net.paslavsky.kotlin.mockito
 
+import java.lang.reflect.Proxy
 import java.util.*
+import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.isAccessible
 
@@ -29,7 +31,7 @@ import kotlin.reflect.jvm.isAccessible
  * @since 0.0.1
  */
 open class Defaults {
-    private val search = LinkedList< (kotlin.Function1<KClass<*>, Any?>)>()
+    private val search = ConcurrentLinkedQueue< (Function1<KClass<*>, Any?>)>()
 
     open fun <T : Any> valueFor(kClass: KClass<T>) : T = internalLookUp(kClass) ?: Global.valueFor(kClass)
 
@@ -103,6 +105,16 @@ open class Defaults {
                     it == KClass::class -> KClass::class
                     it == Class::class -> Class::class.java
                     it.objectInstance != null -> it.objectInstance
+                    it.java.isInterface -> {
+                        val proxyInterface = it
+                        val proxyInstance = Proxy.newProxyInstance(
+                                ClassLoader.getSystemClassLoader(),
+                                arrayOf(proxyInterface.java),
+                                { proxy, method, args -> null }
+                        )
+                        register { if (it == proxyInterface) proxyInstance else null }
+                        proxyInstance
+                    }
                     else -> {
                         val accessibleConstructorWithoutArguments = it.constructors.asSequence().filter {
                             it.parameters.isEmpty() && it.isAccessible

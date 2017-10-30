@@ -19,7 +19,7 @@ package net.paslavsky.kotlin.mockito
 
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
-import org.mockito.stubbing.Stubber
+import org.mockito.stubbing.OngoingStubbing
 import kotlin.reflect.KClass
 
 /**
@@ -40,36 +40,37 @@ class ThenAction<T, M : Any>(
         open fun doSomething(): Any? = null
     }
 
-    fun thenThrow(toBeThrown: KClass<out Throwable>) = ActionChain<T>({ Mockito.doThrow(toBeThrown.java) })
-    fun thenThrow(toBeThrown: Throwable) = ActionChain<T>({ Mockito.doThrow(toBeThrown) })
-    fun thenCallRealMethod() = ActionChain<T>({ Mockito.doCallRealMethod() })
-    fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = ActionChain<T>({ Mockito.doAnswer(answer) })
-    fun thenNothing() = ActionChain<T>({ Mockito.doNothing() })
-    fun thenReturn(toBeReturned: T?) = ActionChain<T>({ Mockito.doReturn(toBeReturned) })
+    fun thenThrow(toBeThrown: KClass<out Throwable>) = ActionChain<T>({ thenThrow(toBeThrown.java) })
+    fun thenThrow(toBeThrown: Throwable) = ActionChain<T>({ thenThrow(toBeThrown) })
+    fun thenCallRealMethod() = ActionChain<T>({ thenCallRealMethod() })
+    fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = ActionChain<T>({ thenAnswer(answer) })
+    fun thenNothing() = ActionChain<T>({ then {} })
+    fun thenReturn(toBeReturned: T?) = ActionChain<T>({ thenReturn(toBeReturned) })
 
-    private class PreviousActionHolder(internal val acton: () -> Stubber)
-
-    inner class ActionChain<T>(private var acton: () -> Stubber) {
+    inner class ActionChain<T>(private var action: OngoingStubbing<T>.() -> OngoingStubbing<T>) {
         init {
             chains.add(this)
         }
 
-        fun thenThrow(toBeThrown: KClass<out Throwable>) = addAction { doThrow(toBeThrown.java) }
-        fun thenThrow(toBeThrown: Throwable) = addAction { doThrow(toBeThrown) }
-        fun thenCallRealMethod() = addAction { doCallRealMethod() }
-        fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = addAction { doAnswer(answer) }
-        fun thenNothing() = addAction { doNothing() }
-        fun thenReturn(toBeReturned: T?) = addAction { doReturn(toBeReturned) }
+        fun thenThrow(toBeThrown: KClass<out Throwable>) = addAction { thenThrow(toBeThrown.java) }
+        fun thenThrow(toBeThrown: Throwable) = addAction { thenThrow(toBeThrown) }
+        fun thenCallRealMethod() = addAction { thenCallRealMethod() }
+        fun thenAnswer(answer: (invocation: InvocationOnMock) -> T) = addAction { thenAnswer(answer) }
+        fun thenNothing() = addAction { then {} }
+        fun thenReturn(toBeReturned: T?) = addAction { thenReturn(toBeReturned) }
 
-        private fun addAction(newAction: Stubber.() -> Stubber): ActionChain<T> {
-            val previousActionHolder = PreviousActionHolder(acton)
-            acton = { previousActionHolder.acton().newAction() }
+        private fun addAction(newAction: OngoingStubbing<T>.() -> OngoingStubbing<T>): ActionChain<T> {
+            val previous = action
+            action = { previous().newAction() }
             return this
         }
 
         internal fun done() {
             try {
-                acton().`when`(mock).call()
+                val call1 = mock.call()
+                @Suppress("UNCHECKED_CAST")
+                val stubbing = Mockito.`when`(call1) as OngoingStubbing<T>
+                stubbing.action()
             } catch(e: Exception) {
                 resetMockitoStubbingState()
                 throw e

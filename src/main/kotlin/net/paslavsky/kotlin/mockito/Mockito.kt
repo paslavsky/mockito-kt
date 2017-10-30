@@ -55,7 +55,7 @@ fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val mock = Mockito.mock(kClass.java)
     val mockKt = Mock<T>(mock)
     mockKt.setup()
-    mockKt.actionChains.asSequence().forEach { it.done() }
+    mockKt.actionChains.forEach { it.done() }
     return mock
 }
 
@@ -63,7 +63,7 @@ fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(obj)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
-    mockKt.actionChains.asSequence().forEach { it.done() }
+    mockKt.actionChains.forEach { it.done() }
     return spy
 }
 
@@ -71,7 +71,7 @@ fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
     val spy = Mockito.spy(classToSpy.java)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
-    mockKt.actionChains.asSequence().forEach { it.done() }
+    mockKt.actionChains.forEach { it.done() }
     return spy
 }
 
@@ -83,5 +83,5 @@ fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractio
 fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
 
 fun <T: Any> verifyOnce(mock: T, checks: T.(match: MatchersKt) -> Unit) {
-    Mockito.verify(mock).checks(object: MatchersKt() {})
+    Mockito.verify(mock).checks(Matchers)
 }

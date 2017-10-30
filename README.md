@@ -125,6 +125,6 @@ repositories {
 ### Artifact
 ```
 dependencies {
-    test 'net.paslavsky.kotlin:mockito-kt:1.0.0'
+    testCompile 'net.paslavsky.kotlin:mockito-kt:1.0.0'
 }
 ```
