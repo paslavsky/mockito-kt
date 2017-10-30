@@ -1,6 +1,8 @@
 # Mockito Kt
 
 [![Apache License 2.0](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://travis-ci.org/paslavsky/mockito-kt.svg?branch=master)](https://travis-ci.org/paslavsky/mockito-kt)
+[ ![Download](https://api.bintray.com/packages/paslavsky/maven/mockito-kt/images/download.svg) ](https://bintray.com/paslavsky/maven/mockito-kt/_latestVersion)
 
 ## Purpose
 
@@ -77,14 +79,18 @@ Defaults.Global.register(Bar::class to someBarValue)
 | ------ | :--------: |
 | Java   | 1.7+       |
 | Maven  | v3+        |
-| Kotlin | 1.0        |
+| Kotlin | 1.1        |
 
 ### Repository settings
 ```
     <repositories>
         <repository>
-            <id>paslavsky.repo</id>
-            <url>http://paslavsky.homeunix.net:8000/nexus/content/repositories/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-paslavsky-maven</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/paslavsky/maven</url>
         </repository>
     </repositories>
 ```
@@ -94,7 +100,31 @@ Defaults.Global.register(Bar::class to someBarValue)
     <dependency>
         <groupId>net.paslavsky.kotlin</groupId>
         <artifactId>mockito-kt</artifactId>
-        <version>0.0.5-beta</version>
+        <version>1.0.0</version>
         <scope>test</scope>
     </dependency>
+```
+
+## Using Gradle
+### System requirements
+|        |            |
+| ------ | :--------: |
+| Java   | 1.7+       |
+| Gradle | v3+        |
+| Kotlin | 1.1        |
+
+### Repository settings
+```
+repositories {
+    maven {
+        url  "https://dl.bintray.com/paslavsky/maven" 
+    }
+}
+```
+
+### Artifact
+```
+dependencies {
+    test 'net.paslavsky.kotlin:mockito-kt:1.0.0'
+}
 ```

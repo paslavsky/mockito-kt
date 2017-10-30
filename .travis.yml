@@ -12,7 +12,6 @@ deploy:
     on:
       repo: paslavsky/mockito-kt
       branch: master
-      tags: true
   - provider: bintray
     skip_cleanup: true
     file: descriptor.json
