@@ -7,7 +7,7 @@ deploy:
     skip_cleanup: true
     api_key:
       secure: Q4xKB2iQjQ9SZzouuiu4wV32sKkOSNd94yuOwWP+lpfBWLZJ8ttLs3fAMSBaLbamB697EueBoH+NmkPxMnoYQNJ6uVZJVZnweRfz59JHecFzdeJYsmUjokza6BIfXt19fKrkgCktVof7r7KwAtASjaGwAnuuDGydgw9kkdFx7nDcCLZZri5U/F7OfoCcAOSJ8SfF56vsafBXF8GD2cLjIAkmxMX4BPwDzALifv9J0+3nH7CQl4WptiRNP1bbyE8CZhxbLgvMBZP4ihsEfVqej3Yc0753rXMBRGfPa/kS1jqVAWGHXTTXpbMfpXDE/xxhnS+OvQxTSF8+n+DsKJqi6iOVFTNctqFszQyCNHfSxDeWRkVrOng2Sb+83FoyQt5PE4uQAWc4WoxBc0DPwxXAqQXPnOU1ucnT7alz6SGLvtv4/FspBe/2DhDHFXmVLByxEis7teYfLhH7XHonD1odOH43C69kOwRFTYnt5QzY/rx862gt2YS4bfUMfQ5+tdHzvoEMOF5GbO/QHBiIiik5m2mV9AwsEp/HCDCeSib6XdjYGmBd7F2CPS8ZAzuxScX1LV3uJDNg9KgI5AhI6CHxygrPNDT/6s3prcIm9x7dl8L2QQAIjmlJvEL0o1Dwn1+JV867ssYZUJ6rYr3R2MhWHzP2AJkOdUG0ZFWbcyi6y7c=
-    file: target/*.jar
+    file: target/mockito-kt-1.0.0.jar
     on:
       repo: paslavsky/mockito-kt
       branch: v.1.0.0
