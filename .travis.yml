@@ -12,12 +12,9 @@ deploy:
     on:
       repo: paslavsky/mockito-kt
       branch: master
-  - provider: bintray
+  - provider: script
+    script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
     skip_cleanup: true
-    file: descriptor.json
-    user: paslavsky
-    key:
-      secure: dVFoLWkEpa+Gr6eMDHV4dDEdX5I3xOZBE3CjgNTVYEsc1h6friMcvFfXlA3ofpzZT1I+sHphEGH/vwxYv2Fb2R6mFW+wZckUxu81fAN6NKivbCtdeYMJpbARdVb7AI8lQp6zrNq0x9b2PscDetxkpiRCEyrHNGb1Y/IFYF/x6wfn++eG58MiOKnYTYQZrA2tPVl8Pqj89QC3wpcnpl1Z6P7Ch4LAjL1FlJY01/bia/1Zycm7oTI4+xrlvUK/F4PdMmF7/31jSgzoQuS4E9p6FVDcMZHNTCzJq4jR7stJvgPYWvvE3Pwx0Ac9cd7/ChI4HSIJHFLUkfKeUrULxamEdzlpSrmSL1RPcaCH9LTXWrozbDD+HcmqxR8SiK4v/oR49O6SX+IdepSLOMV9XlNdpQ8NImsNmdrfA4MyFSgnqfC3IZFnQxeWuqwIM9ZJOy6x8pP04UzVyqYMTWm7S7NYv+q0zgO8l6hYfKZPW0Dt7nUTZfp7/5IwHOsvrn41eLPJ7q5FYlUqMMZKeXrvb9PtmkICivVVSmx8C7i4DIPzLmbMeFyx5ifVDn8rL/pRN12NFb3z2dv9OcBiijfUkWLtXAPxbFEEMtEHQiEFoo0dv5j7IDoFaWd9tyaE+0yHljsk7cdKFul+ZQX+J4KkCGgQnkrBNEG0U086iLZQCSbVhcQ=
     on:
       repo: paslavsky/mockito-kt
       branch: master
