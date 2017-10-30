@@ -72,7 +72,7 @@ class ThenAction<T, M : Any>(
                 acton().`when`(mock).call()
             } catch(e: Exception) {
                 resetMockitoStubbingState()
-                throw e;
+                throw e
             }
         }
 

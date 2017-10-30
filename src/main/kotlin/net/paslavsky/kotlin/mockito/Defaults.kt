@@ -56,7 +56,7 @@ open class Defaults {
                 when (it) {
                     Unit::class -> Unit
                     Any::class -> Any()
-                    Boolean::class -> 0
+                    Boolean::class -> false
                     Byte::class -> 0.toByte()
                     Short::class -> 0.toShort()
                     Int::class -> 0

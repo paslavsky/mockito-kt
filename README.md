@@ -21,11 +21,11 @@ verify(list) {
 ## Example 2
 ```
 val list = mock(MutableList::class) {
-    whenMock {
+    on {
         size()
     }.thenReturn(5)
 
-    whenMock {
+    on {
         get(eq(3))
     }.thenReturn("String 4")
 }

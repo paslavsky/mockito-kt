@@ -28,5 +28,5 @@ import java.util.*
 class Mock<M : Any>(private val mock: M) : MatchersKt() {
     internal val actionChains: MutableSet<ThenAction<*,*>.ActionChain<*>> = HashSet()
 
-    fun <T> whenMock(body: M.() -> T): ThenAction<T, M> = ThenAction(mock, body, actionChains)
+    fun <T> on(body: M.() -> T): ThenAction<T, M> = ThenAction(mock, body, actionChains)
 }
