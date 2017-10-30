@@ -42,8 +42,8 @@
 
     <distributionManagement>
         <repository>
-            <id>paslavsky.repo</id>
-            <url>http://paslavsky.homeunix.net:8000/nexus/content/repositories/releases</url>
+            <id>bintray-repo</id>
+            <url>https://dl.bintray.com/paslavsky/maven/</url>
         </repository>
     </distributionManagement>
 

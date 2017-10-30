@@ -116,3 +116,6 @@ abstract class MatchersKt {
         return defaults.valueFor(kClass)
     }
 }
+
+@Suppress("unused")
+object Matchers : MatchersKt()
