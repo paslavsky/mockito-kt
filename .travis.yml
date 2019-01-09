@@ -1,13 +1,14 @@
 language: java
 script: mvn package
 jdk:
-- oraclejdk8
+  - oraclejdk8
 deploy:
   - provider: releases
-    skip_cleanup: true
     api_key:
-      secure: Q4xKB2iQjQ9SZzouuiu4wV32sKkOSNd94yuOwWP+lpfBWLZJ8ttLs3fAMSBaLbamB697EueBoH+NmkPxMnoYQNJ6uVZJVZnweRfz59JHecFzdeJYsmUjokza6BIfXt19fKrkgCktVof7r7KwAtASjaGwAnuuDGydgw9kkdFx7nDcCLZZri5U/F7OfoCcAOSJ8SfF56vsafBXF8GD2cLjIAkmxMX4BPwDzALifv9J0+3nH7CQl4WptiRNP1bbyE8CZhxbLgvMBZP4ihsEfVqej3Yc0753rXMBRGfPa/kS1jqVAWGHXTTXpbMfpXDE/xxhnS+OvQxTSF8+n+DsKJqi6iOVFTNctqFszQyCNHfSxDeWRkVrOng2Sb+83FoyQt5PE4uQAWc4WoxBc0DPwxXAqQXPnOU1ucnT7alz6SGLvtv4/FspBe/2DhDHFXmVLByxEis7teYfLhH7XHonD1odOH43C69kOwRFTYnt5QzY/rx862gt2YS4bfUMfQ5+tdHzvoEMOF5GbO/QHBiIiik5m2mV9AwsEp/HCDCeSib6XdjYGmBd7F2CPS8ZAzuxScX1LV3uJDNg9KgI5AhI6CHxygrPNDT/6s3prcIm9x7dl8L2QQAIjmlJvEL0o1Dwn1+JV867ssYZUJ6rYr3R2MhWHzP2AJkOdUG0ZFWbcyi6y7c=
-    file: target/mockito-kt-1.0.0.jar
+      secure: GA/ki1ihVEOon4FojijA+P/EQSBphDxDH6AgPaD3LDYy6KTjwYLVMPxeF0LxrH16DtYnhlktTungrUuxFRMQE9hL9pZzqf/zVFRvkBLp2nqw3u/cXy1dwpolbarmQg00zobEmBu3CAmUCDqeK7szDeQMfNQQ6h5HpmBoqJ9XPfJouVxmxW5iFxXLGytTIAwH6dDj72gtCju42q9vTMBz8XGxRc6FfdHXUcwgv/iR5ul27k6kn6/v8717s/lOiS4YBA9/hiQzq8KU/JvVq2gxc+v0IWZUJ0VK9YOjcocv63vxvBvcWEglQldtEC7bcFrXFHclhYkFfyieCbGmRQiYv19L3YStUPnjOg+swzvQ5MsfyDeXZlOusySvx5DDXNBF46nIuixs+LHXTsDrx545jr1lZ9Feq7HcvJCelQ4HGHP3zCNY93vcQXTTKePGrvytjvUO6mBqxyVrnrWVAmqqfgqaTgg3kAEWbP6XrC0XAx7RtNtwkhueBYuG9pC5uVAG+ZKCO/TjsWDsl09sHgTdBEBRMd9aaTTWrueUp8bFuk2U+YgreZhT1KUM9x6OTlC5aiEMgBnm//C5djGuee9dypEIVTCl6j81wsFjnly09/f9MGraWWLFnW4QkLFsxIVRAbhtC255Cul7p5j1AU5A/jeGclqH5qQfeX9EayTU23k=
+    file: "./target/mockito-kt*.jar"
+    skip_cleanup: true
+    file_glob: true
     overwrite: true
     on:
       repo: paslavsky/mockito-kt
