@@ -1,5 +1,7 @@
+@file:Suppress("unused")
+
 /*
- * Copyright (c) 2015 Andrey Paslavsky.
+ * Copyright (c) 2019 Andrey Paslavsky.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,73 +17,73 @@
  *
  */
 
-@file:Suppress("unused")
-
+/**
+ * In common this library is facade around [Mockito library](http://mockito.org/) for [Kotlin](www.kotlinlang.org)
+ * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
+ */
 package net.paslavsky.kotlin.mockito
 
 import org.mockito.Mockito
 import kotlin.reflect.KClass
 
 /**
- * In common this library is facade around [Mockito library](http://mockito.org/) for [Kotlin](www.kotlinlang.org)
- * @author [Andrey Paslavsky](mailto:a.paslavsky@gmail.com)
- * @since 0.0.1
- */
-
-/**
  * ## Example 1
  *
  * ```
- * val list = mock(MutableList::class)
+ * val list = mock<MutableList<String>>()
  *
  * list.add("String 1")
  * list.add("String 2")
  *
- * verify(list) {
- *     times(2).add(anyString())
+ * list.verify {
+ *     times(2).add(any())
  * }
  * ```
  *
  * ## Example 2
  * ```
- * val list = mock(MutableList::class) {
- *     `when`(mock.size()).thenReturn(5)
- *     `when`(mock.get(eq(3))).thenReturn("String 4")
+ * val list = MutableList::class.mock {
+ *     on { size }.thenReturn(5)
+ *     on { this[eq(3)] }.thenReturn("String 4")
  * }
  * ...
  * ```
  */
-fun <T : Any> mock(kClass: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
-    val mock = Mockito.mock(kClass.java)
+fun <T : Any> KClass<T>.mock(setup: Mock<T>.() -> Unit = {}): T {
+    val mock = Mockito.mock(java)
     val mockKt = Mock<T>(mock)
     mockKt.setup()
     mockKt.actionChains.forEach { it.done() }
     return mock
 }
 
-fun <T : Any> spy(obj: T, setup: Mock<T>.() -> Unit = {}): T {
-    val spy = Mockito.spy(obj)
+inline fun <reified T : Any> mock(noinline setup: Mock<T>.() -> Unit = {}) = T::class.mock(setup)
+
+fun <T : Any> T.spy(setup: Mock<T>.() -> Unit = {}): T {
+    val spy = Mockito.spy(this)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
     mockKt.actionChains.forEach { it.done() }
     return spy
 }
 
-fun <T : Any> spy(classToSpy: KClass<T>, setup: Mock<T>.() -> Unit = {}): T {
-    val spy = Mockito.spy(classToSpy.java)
+fun <T : Any> KClass<T>.spy(setup: Mock<T>.() -> Unit = {}): T {
+    val spy = Mockito.spy(java)
     val mockKt = Mock<T>(spy)
     mockKt.setup()
     mockKt.actionChains.forEach { it.done() }
     return spy
 }
 
-fun <T : Any> verify(mock: T, verify: Verification<T>.() -> Unit) {
-    Verification(mock).verify()
+inline fun <reified T : Any> spy(noinline setup: Mock<T>.() -> Unit = {}) = T::class.spy(setup)
+
+fun <T : Any> T.verify(verify: Verification<T>.() -> Unit) {
+    Verification(this).verify()
 }
 
 fun verifyNoMoreInteractions(vararg mocks: Any) = Mockito.verifyNoMoreInteractions(*mocks)
 fun verifyZeroInteractions(vararg mocks: Any) = Mockito.verifyZeroInteractions(*mocks)
 
-fun <T: Any> verifyOnce(mock: T, checks: T.(match: MatchersKt) -> Unit) {
-    Mockito.verify(mock).checks(Matchers)
+fun <T : Any> T.verifyOnce(checks: T.(match: MatchersKt) -> Unit) {
+    Mockito.verify(this).checks(Matchers)
 }

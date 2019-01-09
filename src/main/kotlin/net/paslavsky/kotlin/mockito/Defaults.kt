@@ -54,8 +54,8 @@ open class Defaults {
 
     companion object Global : Defaults() {
         init {
-            register {
-                when (it) {
+            register { kClass ->
+                when (kClass) {
                     Unit::class -> Unit
                     Any::class -> Any()
                     Boolean::class -> false
@@ -79,8 +79,8 @@ open class Defaults {
                     else -> null
                 }
             }
-            register {
-                when (it) {
+            register { kClass ->
+                when (kClass) {
                     List::class -> emptyList<Any>()
                     MutableList::class -> emptyList<Any>()
                     Set::class -> emptySet<Any>()
@@ -93,30 +93,29 @@ open class Defaults {
                     else -> null
                 }
             }
-            register {
-                when (it) {
+            register { kClass ->
+                when (kClass) {
                     Locale::class -> Locale.getDefault()
                     else -> null
                 }
             }
-            register {
+            register { kClass ->
                 @Suppress("SENSELESS_COMPARISON")
                 when {
-                    it == KClass::class -> KClass::class
-                    it == Class::class -> Class::class.java
-                    it.objectInstance != null -> it.objectInstance
-                    it.java.isInterface -> {
-                        val proxyInterface = it
+                    kClass == KClass::class -> KClass::class
+                    kClass == Class::class -> Class::class.java
+                    kClass.objectInstance != null -> kClass.objectInstance
+                    kClass.java.isInterface -> {
+                        val proxyInterface = kClass
                         val proxyInstance = Proxy.newProxyInstance(
                                 ClassLoader.getSystemClassLoader(),
-                                arrayOf(proxyInterface.java),
-                                { proxy, method, args -> null }
-                        )
+                                arrayOf(proxyInterface.java)
+                        ) { _, _, _ -> null }
                         register { if (it == proxyInterface) proxyInstance else null }
                         proxyInstance
                     }
                     else -> {
-                        val accessibleConstructorWithoutArguments = it.constructors.asSequence().filter {
+                        val accessibleConstructorWithoutArguments = kClass.constructors.asSequence().filter {
                             it.parameters.isEmpty() && it.isAccessible
                         }.map {
                             it as Function0<*>
@@ -130,4 +129,8 @@ open class Defaults {
         override fun <T : Any> valueFor(kClass: KClass<T>): T =
                 internalLookUp(kClass) ?: throw IllegalStateException("Please register default value for ${kClass.qualifiedName}")
     }
+}
+
+inline fun <reified T> Defaults.register(value: T) = register {
+    if (T::class == it) value else null
 }

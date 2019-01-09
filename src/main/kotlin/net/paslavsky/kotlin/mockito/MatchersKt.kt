@@ -59,7 +59,6 @@ abstract class MatchersKt {
         return defaults.valueFor(Array<Any>::class) as Array<T>
     }
 
-    fun any(): Any = any(Any::class)
     fun <T : Any> anyNullable(): T? = ArgumentMatchers.any<T>()
     fun anyBoolean(): Boolean = any(Boolean::class)
     fun anyByte(): Byte = any(Byte::class)
@@ -119,3 +118,6 @@ abstract class MatchersKt {
 
 @Suppress("unused")
 object Matchers : MatchersKt()
+
+inline fun <reified T : Any> MatchersKt.any() = any(T::class)
+inline fun <reified T : Any> MatchersKt.argThat(matcher: ArgumentMatcher<T>) = argThat(matcher, T::class)

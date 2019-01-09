@@ -37,7 +37,7 @@ class MockTest : Spek({
     given("some service class") {
         val serviceClass = SomeService::class
         on("creating mock that based on this class") {
-            val mockService = mock(serviceClass) {
+            val mockService = serviceClass.mock {
                 on { foo() }.thenReturn("bla bla bla")
                 on { bar(eq(SomeData("abc", 123))) }.thenReturn(123 to 321)
             }
@@ -50,17 +50,17 @@ class MockTest : Spek({
         on("creating mock with any matching of the unregistered type") {
             it("should fails") {
                 assertFails {
-                    mock(serviceClass) {
-                        on { bar(any(SomeData::class)) }.thenReturn(123 to 321)
+                    serviceClass.mock {
+                        on { bar(any()) }.thenReturn(123 to 321)
                     }
                 }
             }
         }
 
         on("creating mock with any matching and default value") {
-            val mockService = mock(serviceClass) {
+            val mockService = serviceClass.mock {
                 defaults.register(SomeData::class to SomeData("123", 321))
-                on { bar(any(SomeData::class)) }.thenReturn(123 to 321)
+                on { bar(any()) }.thenReturn(123 to 321)
             }
             it("should work as expected") {
                 assertEquals(123 to 321, mockService.bar(SomeData("abc", 123)))
@@ -68,7 +68,7 @@ class MockTest : Spek({
         }
 
         on("creating mock with multiple actions") {
-            val mockService = mock(serviceClass) {
+            val mockService = serviceClass.mock {
                 on { foo() }.thenReturn("one").thenReturn("two").thenThrow(IllegalStateException::class)
             }
             it("should return `one`") {
@@ -85,7 +85,7 @@ class MockTest : Spek({
         }
 
         on("mocking method that can accept nulls") {
-            val mockService = mock(serviceClass) {
+            val mockService = serviceClass.mock {
                 on {
                     withNulls(anyNullable())
                 }.thenReturn(null)
@@ -97,11 +97,11 @@ class MockTest : Spek({
         }
 
         on("call few methods") {
-            val mockService = mock(serviceClass)
+            val mockService = serviceClass.mock()
             mockService.foo()
             mockService.bar(SomeData("Test", 1))
             it("should able check this invocation") {
-                verifyOnce(mockService) { match ->
+                mockService.verifyOnce { match ->
                     foo()
                     bar(match.eq(SomeData("Test", 1)))
                 }
