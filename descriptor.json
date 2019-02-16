@@ -19,14 +19,14 @@
     "public_stats": true
   },
   "version": {
-    "name": "1.0.0",
-    "released": "2017-10-30",
+    "name": "2.0.1",
+    "released": "2019-02-16",
     "gpgSign": false
   },
   "files": [
     {
       "includePattern": "target/libs/(.*\\.jar)",
-      "uploadPattern": "net/paslavsky/mockito-kt/1.0.0/$1"
+      "uploadPattern": "net/paslavsky/mockito-kt/2.0.1/$1"
     }
   ],
   "publish": true

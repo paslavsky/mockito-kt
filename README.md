@@ -2,7 +2,7 @@
 
 [![Apache License 2.0](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/paslavsky/mockito-kt.svg?branch=master)](https://travis-ci.org/paslavsky/mockito-kt)
-[ ![Download](https://api.bintray.com/packages/paslavsky/maven/mockito-kt/images/download.svg) ](https://bintray.com/paslavsky/maven/mockito-kt/_latestVersion)
+[![Download](https://api.bintray.com/packages/paslavsky/maven/mockito-kt/images/download.svg) ](https://bintray.com/paslavsky/maven/mockito-kt/_latestVersion)
 
 ## Purpose
 
@@ -95,7 +95,7 @@ Defaults.Global.register<Bar>(someBarValue)
     <dependency>
         <groupId>net.paslavsky.kotlin</groupId>
         <artifactId>mockito-kt</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
         <scope>test</scope>
     </dependency>
 ```
@@ -120,7 +120,7 @@ repositories {
 ### Artifact
 ```
 dependencies {
-    testCompile 'net.paslavsky.kotlin:mockito-kt:2.0.0'
+    testCompile 'net.paslavsky.kotlin:mockito-kt:2.0.1'
 }
 ```
 
